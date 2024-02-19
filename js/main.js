@@ -7,32 +7,20 @@ const getRandomInteger = (a, b) => {
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-const getRandomPhotoIdGenerator = () => {
+const getRandomIdGenerator = (min, max) => {
   const ids = [];
   return function() {
-    let id = getRandomInteger(1, 25);
+    let id = getRandomInteger(min, max);
     while(ids.includes(id)) {
-      id = getRandomInteger(1, 25);
+      id = getRandomInteger(min, max);
     }
     ids.push(id);
     return id;
   };
 };
 
-const getRandomMessageIdGenerator = () => {
-  const ids = [];
-  return function() {
-    let id = getRandomInteger(1,1000);
-    while(ids.includes(id)) {
-      id = getRandomInteger(1, 1000);
-    }
-    ids.push(id);
-    return id;
-  };
-};
-
-const getRandomPhotoId = getRandomPhotoIdGenerator();
-const getRandomMessageId = getRandomMessageIdGenerator();
+const getRandomPhotoId = getRandomIdGenerator(1, 25);
+const getRandomMessageId = getRandomIdGenerator(1, 1000);
 
 const createComment = () => {
   const id = getRandomMessageId();
@@ -66,5 +54,3 @@ const createPhoto = () => {
 };
 
 Array.from({length: 25}, createPhoto); //фотографии
-
-//console.log(photos);
