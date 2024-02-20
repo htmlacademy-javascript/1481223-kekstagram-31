@@ -53,4 +53,8 @@ const createPhoto = () => {
   };
 };
 
-Array.from({length: 25}, createPhoto); //фотографии
+const PHOTOS_COUNT = 25;
+
+const createPhotos = () => Array.from({length: PHOTOS_COUNT}, createPhoto);
+
+createPhotos(); //фотографии
