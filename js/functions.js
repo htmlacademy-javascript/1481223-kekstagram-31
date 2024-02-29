@@ -61,9 +61,9 @@ function checkTime(startWorkTime, endWorkTime, startMeet, duration) {
     return parseInt(hour, 10) * 60 + parseInt(minute, 10);
   }
 
-  let startWorkTimeMinute = toMinute(startWorkTime);
-  let endWorkTimeMinute = toMinute(endWorkTime);
-  let startMeetMinute = toMinute(startMeet);
+  const startWorkTimeMinute = toMinute(startWorkTime);
+  const endWorkTimeMinute = toMinute(endWorkTime);
+  const startMeetMinute = toMinute(startMeet);
 
   if(startMeetMinute >= startWorkTimeMinute && startMeetMinute + duration <= endWorkTimeMinute) {
     return true;
