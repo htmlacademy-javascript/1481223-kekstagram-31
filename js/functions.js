@@ -54,3 +54,25 @@ extractNumber('а я томат'); //NaN
 extractNumber(2023); //2023
 extractNumber(-1);// 1
 extractNumber(1.5);//15
+
+function checkTime(startWorkTime, endWorkTime, startMeet, duration) {
+  function toMinute(time) {
+    const [hour, minute] = time.split(':');
+    return parseInt(hour, 10) * 60 + parseInt(minute, 10);
+  }
+
+  let startWorkTimeMinute = toMinute(startWorkTime);
+  let endWorkTimeMinute = toMinute(endWorkTime);
+  let startMeetMinute = toMinute(startMeet);
+
+  if(startMeetMinute >= startWorkTimeMinute && startMeetMinute + duration <= endWorkTimeMinute) {
+    return true;
+  }
+  return false;
+}
+
+checkTime('08:00', '17:30', '14:00', 90);
+checkTime('8:0', '10:0', '8:0', 120);
+checkTime('08:00', '14:30', '14:00', 90);
+checkTime('14:00', '17:30', '08:0', 90);
+checkTime('8:00', '17:30', '08:00', 900);
