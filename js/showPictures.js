@@ -1,7 +1,7 @@
-import {createPhotos} from './data.js';
+import {createPhotosData} from './data.js';
 
 const showPictures = () => {
-  const photos = createPhotos();
+  const photos = createPhotosData();
   const photoTemplate = document.querySelector('#picture').content.querySelector('.picture');
   const picturesElement = document.querySelector('.pictures');
   const photosFragment = document.createDocumentFragment();

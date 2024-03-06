@@ -4,7 +4,7 @@ const getRandomMessageId = getRandomIdGenerator(1, 1000);
 
 const PHOTOS_COUNT = 25;
 
-const createComment = () => {
+const createCommentData = () => {
   const id = getRandomMessageId();
   const avatarNum = getRandomInteger(1, 6);
   const messages = [
@@ -24,17 +24,17 @@ const createComment = () => {
   };
 };
 
-const createPhoto = () => {
+const createPhotoData = () => {
   const id = getRandomPhotoId();
   return {
     id: id,
     url: `photos/${id}.jpg`,
     description: `Мое супер фото ${id}`,
     likes: getRandomInteger(15, 200),
-    comments: Array.from({length: getRandomInteger(0, 30)}, createComment)
+    comments: Array.from({length: getRandomInteger(0, 30)}, createCommentData)
   };
 };
 
-const createPhotos = () => Array.from({length: PHOTOS_COUNT}, createPhoto);
+const createPhotosData = () => Array.from({length: PHOTOS_COUNT}, createPhotoData);
 
-export {createPhotos};
+export {createPhotosData};
