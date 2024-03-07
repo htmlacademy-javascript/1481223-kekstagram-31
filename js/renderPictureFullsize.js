@@ -30,7 +30,7 @@ const renderPictureFullsize = (photos) => {
   const picturesElement = document.querySelector('.pictures');
   const closeButtonElement = document.querySelector('#picture-cancel');
 
-  picturesElement.addEventListener('click', (evt) => {
+  const onClickOnMiniPicture = (evt) => {
     const picture = evt.target.closest('[data-photo-id]');
     if(!picture) {
       return;
@@ -73,13 +73,15 @@ const renderPictureFullsize = (photos) => {
     });
     commentContainer.innerHTML = '';
     commentContainer.appendChild(commentsFragment);
-  });
-  closeButtonElement.addEventListener('click', () => {
+  };
+  picturesElement.addEventListener('click', onClickOnMiniPicture);
+  const onClickOnCloseButton = () => {
     const likesElement = document.querySelector('.likes-count');
     closePictureModal();
     likesElement.removeEventListener('click', onLikeAdd);
     document.removeEventListener('keydown', onEscapeModalClose);
-  });
+  };
+  closeButtonElement.addEventListener('click', onClickOnCloseButton);
 };
 
 export {renderPictureFullsize};
