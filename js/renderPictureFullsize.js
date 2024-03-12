@@ -28,6 +28,7 @@ const onEscapeModalClose = (evt) => {
     commentLoader.removeEventListener('click', addComments);
   }
 };
+const commentExampleElement = document.querySelector('.social__comment');
 const addCommentsGenerator = (comments) => {
 
   let commentsShownCounter = 2;
@@ -38,7 +39,6 @@ const addCommentsGenerator = (comments) => {
     const commentsCount = document.querySelector('.social__comment-total-count');
     const commentsShown = document.querySelector('.social__comment-shown-count');
     const commentContainer = document.querySelector('.social__comments');
-    const commentExampleElement = document.querySelector('.social__comment');
 
     commentsShown.textContent = commentsShownCounter;
     commentsCount.textContent = comments.length;
