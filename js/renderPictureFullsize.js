@@ -29,10 +29,10 @@ const onEscapeModalClose = (evt) => {
   }
 };
 const commentExampleElement = document.querySelector('.social__comment');
-const addCommentsGenerator = (comments) => {
-
-  let commentsShownCounter = 2;
-  if(comments.length < 2) {
+const addCommentsGenerator = (comments, startCount) => {
+  const COMMENTS_ONE_SHOW = 5;
+  let commentsShownCounter = startCount;
+  if(comments.length < startCount) {
     commentsShownCounter = comments.length;
   }
   return function() {
@@ -43,6 +43,11 @@ const addCommentsGenerator = (comments) => {
     commentsShown.textContent = commentsShownCounter;
     commentsCount.textContent = comments.length;
 
+    if(commentsShownCounter === comments.length) {
+      commentLoader.classList.add('hidden');
+    } else {
+      commentLoader.classList.remove('hidden');
+    }
     const commentsFragment = document.createDocumentFragment();
     comments.slice(0, commentsShownCounter).forEach(({avatar, name, message}) => {
       const commentClone = commentExampleElement.cloneNode(true);
@@ -56,7 +61,7 @@ const addCommentsGenerator = (comments) => {
     });
     commentContainer.innerHTML = '';
     commentContainer.appendChild(commentsFragment);
-    commentsShownCounter += 5;
+    commentsShownCounter += COMMENTS_ONE_SHOW;
     if(commentsShownCounter > comments.length) {
       commentsShownCounter = comments.length;
     }
@@ -71,14 +76,13 @@ const onClickOnCloseButton = () => {
   commentLoader.removeEventListener('click', addComments);
 };
 closeButtonElement.addEventListener('click', onClickOnCloseButton);
+const addLikes = (likes) => {
+  const likesElement = document.querySelector('.likes-count');
+  likesElement.addEventListener('click', onLikeAdd, {once: true});
+  likesElement.textContent = likes;
+};
 const renderPictureFullsize = (photos) => {
   const picturesElement = document.querySelector('.pictures');
-
-  const addLikes = (likes) => {
-    const likesElement = document.querySelector('.likes-count');
-    likesElement.addEventListener('click', onLikeAdd, {once: true});
-    likesElement.textContent = likes;
-  };
   const onClickOnMiniPicture = (evt) => {
     const picture = evt.target.closest('[data-photo-id]');
     if(!picture) {
@@ -97,7 +101,7 @@ const renderPictureFullsize = (photos) => {
     bigPictureElement.src = photoData.url;
     descriptionElement.textContent = photoData.description;
 
-    addComments = addCommentsGenerator(photoData.comments);
+    addComments = addCommentsGenerator(photoData.comments, 2);
     addComments();
     commentLoader.addEventListener('click', addComments);
   };
