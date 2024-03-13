@@ -82,8 +82,9 @@ pristine.addValidator(hashTagField, (value) => {
   tags.forEach((tag) => {
     if(results.includes(tag.toLowerCase())) {
       isValid = false;
+    } else {
+      results.push(tag.toLowerCase());
     }
-    results.push(tag.toLowerCase());
   });
   return isValid;
 }, 'хэштеги повторяются');
