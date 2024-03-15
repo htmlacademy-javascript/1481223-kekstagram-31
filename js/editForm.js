@@ -37,7 +37,9 @@ imageUploadInput.addEventListener('change', onChangeImageUploadInput);
 const hashTagField = document.querySelector('.text__hashtags');
 const textDescription = document.querySelector('.text__description');
 const onKeyStopPropagationHashTagField = (evt) => {
-  evt.stopPropagation();
+  if(evt.key === 'Escape') {
+    evt.stopPropagation();
+  }
 };
 hashTagField.addEventListener('keydown', onKeyStopPropagationHashTagField);
 textDescription.addEventListener('keydown', onKeyStopPropagationHashTagField);
