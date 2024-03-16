@@ -6,6 +6,7 @@ import {showPictures} from './showPictures.js';
 import {renderPictureFullsize} from './renderPictureFullsize.js';
 import './editForm.js';
 import './imageScale.js';
+import './imageEffects.js';
 
 const photos = createPhotosData();
 showPictures(photos); //фотографии
