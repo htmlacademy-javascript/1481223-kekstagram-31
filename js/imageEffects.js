@@ -44,7 +44,7 @@ const onChangeUploadInputSetDefaultEffect = () => {
   effectLevel.classList.add('hidden');
   efffectDefault.checked = true;
   imageUploadPreview.style.filter = null;
-  effectLevelValue.value = 1;
+  effectLevelValue.value = '';
   selectedType = '';
 };
 imageUploadInput.addEventListener('change', onChangeUploadInputSetDefaultEffect);
