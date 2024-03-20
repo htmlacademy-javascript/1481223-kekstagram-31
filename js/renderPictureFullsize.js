@@ -88,6 +88,7 @@ const renderPictureFullsize = (photos) => {
     if(!picture) {
       return;
     }
+    evt.preventDefault();
 
     const photoId = picture.dataset.photoId;
     const photoData = photos.find((photo) => photo.id === +photoId);
