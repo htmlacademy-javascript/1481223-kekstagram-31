@@ -1,3 +1,4 @@
+import {sendData} from './api.js';
 const openEditForm = () => {
   const imageOverlay = document.querySelector('.img-upload__overlay');
   imageOverlay.classList.remove('hidden');
@@ -97,10 +98,14 @@ pristine.addValidator(textDescription, (value) => {
   return true;
 }, 'длина комментария больше 140 символов');
 imageUploadForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  const PICTURES_CREATE_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
   const valid = pristine.validate();
 
   if(!valid) {
-    evt.preventDefault();
+    console.log('Ошибка валидации!');
+  } else {
+    const formData = new FormData(evt.target);
+    sendData(PICTURES_CREATE_URL, formData, () => console.log('Успешно отправлено!'), (err) => console.log(err));
   }
-  return valid;
 });
