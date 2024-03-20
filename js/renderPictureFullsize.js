@@ -102,7 +102,7 @@ const renderPictureFullsize = (photos) => {
     bigPictureElement.src = photoData.url;
     descriptionElement.textContent = photoData.description;
 
-    addComments = addCommentsGenerator(photoData.comments, 2);
+    addComments = addCommentsGenerator(photoData.comments, 5);
     addComments();
     commentLoader.addEventListener('click', addComments);
   };
