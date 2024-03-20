@@ -31,3 +31,4 @@ const makePictureSmaller = (evt) => {
   imageUploadPreview.style.transform = `scale(${pictureScale / 100})`;
 };
 buttonSmaller.addEventListener('click', makePictureSmaller);
+export {onChangeUploadInputSetDefaultScale};

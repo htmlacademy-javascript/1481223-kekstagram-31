@@ -88,3 +88,4 @@ const addHeatEffect = () => {
   changeUiSlider(1, 3, 0.1, 'heat');
 };
 effectHeat.addEventListener('click', addHeatEffect);
+export {onChangeUploadInputSetDefaultEffect};

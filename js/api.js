@@ -9,7 +9,13 @@ const sendData = (url, data, onSuccess, onError) => {
     method: 'POST',
     body: data
   })
-    .then(() => onSuccess())
+    .then((response) => {
+      if(response.ok){
+        onSuccess();
+      } else {
+        onError('Не удалось отправить данные!');
+      }
+    })
     .catch((err) => onError(err));
 };
 
