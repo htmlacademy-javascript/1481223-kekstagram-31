@@ -88,9 +88,10 @@ const renderPictureFullsize = (photos) => {
     if(!picture) {
       return;
     }
+    evt.preventDefault();
 
-    const photoIndex = picture.dataset.photoId;
-    const photoData = photos[photoIndex];
+    const photoId = picture.dataset.photoId;
+    const photoData = photos.find((photo) => photo.id === +photoId);
     const bigPictureElement = document.querySelector('.big-picture__img img');
     const descriptionElement = document.querySelector('.social__caption');
 
@@ -101,7 +102,7 @@ const renderPictureFullsize = (photos) => {
     bigPictureElement.src = photoData.url;
     descriptionElement.textContent = photoData.description;
 
-    addComments = addCommentsGenerator(photoData.comments, 2);
+    addComments = addCommentsGenerator(photoData.comments, 5);
     addComments();
     commentLoader.addEventListener('click', addComments);
   };

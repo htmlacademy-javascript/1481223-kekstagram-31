@@ -3,13 +3,13 @@ const showPictures = (photos) => {
   const picturesElement = document.querySelector('.pictures');
   const photosFragment = document.createDocumentFragment();
 
-  photos.forEach(({url, description, likes, comments}, i) => {
+  photos.forEach(({id, url, description, likes, comments}) => {
     const photoElement = photoTemplate.cloneNode(true);
     const pictureElement = photoElement.querySelector('.picture__img');
     const likesElement = photoElement.querySelector('.picture__likes');
     const commentElement = photoElement.querySelector('.picture__comments');
 
-    photoElement.setAttribute('data-photo-id', i);
+    photoElement.setAttribute('data-photo-id', id);
     pictureElement.src = url;
     pictureElement.alt = description;
     likesElement.textContent = likes;
