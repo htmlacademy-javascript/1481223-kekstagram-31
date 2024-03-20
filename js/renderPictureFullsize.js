@@ -89,8 +89,8 @@ const renderPictureFullsize = (photos) => {
       return;
     }
 
-    const photoIndex = picture.dataset.photoId;
-    const photoData = photos[photoIndex];
+    const photoId = picture.dataset.photoId;
+    const photoData = photos.find((photo) => photo.id === +photoId);
     const bigPictureElement = document.querySelector('.big-picture__img img');
     const descriptionElement = document.querySelector('.social__caption');
 
