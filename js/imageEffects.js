@@ -3,7 +3,7 @@ const effectLevel = document.querySelector('.img-upload__effect-level');
 const imageUploadPreview = document.querySelector('.img-upload__preview img');
 const effectLevelValue = document.querySelector('.effect-level__value');
 const slider = document.querySelector('.effect-level__slider');
-noUiSlider.create(slider, {
+const uiSlider = noUiSlider.create(slider, {
   start: 0,
   connect: true,
   range: {
@@ -14,7 +14,7 @@ noUiSlider.create(slider, {
 });
 
 let selectedType = '';
-slider.noUiSlider.on('update', (values) => {
+uiSlider.on('update', (values) => {
   effectLevelValue.value = +values[0];
   if(selectedType === 'chrome') {
     imageUploadPreview.style.filter = `grayscale(${values[0]})`;
@@ -49,69 +49,44 @@ const onChangeUploadInputSetDefaultEffect = () => {
 };
 imageUploadInput.addEventListener('change', onChangeUploadInputSetDefaultEffect);
 
+const changeUiSlider = (min, max, step) => {
+  uiSlider.updateOptions({
+    range: {
+      min: min,
+      max: max
+    },
+    start: max,
+    step: step
+  });
+};
 efffectDefault.addEventListener('click', onChangeUploadInputSetDefaultEffect);
 const addChromeEffect = () => {
   effectLevel.classList.remove('hidden');
   selectedType = 'chrome';
-  slider.noUiSlider.updateOptions({
-    range: {
-      min: 0,
-      max: 1
-    },
-    start: 1,
-    step: 0.1
-  });
+  changeUiSlider(0, 1, 0.1);
 };
 effectChrome.addEventListener('click', addChromeEffect);
 const addSepiaEffect = () => {
   effectLevel.classList.remove('hidden');
   selectedType = 'sepia';
-  slider.noUiSlider.updateOptions({
-    range: {
-      min: 0,
-      max: 1
-    },
-    start: 1,
-    step: 0.1
-  });
+  changeUiSlider(0, 1, 0.1);
 };
 effectSepia.addEventListener('click', addSepiaEffect);
 const addMarvinEffect = () => {
   effectLevel.classList.remove('hidden');
   selectedType = 'marvin';
-  slider.noUiSlider.updateOptions({
-    range: {
-      min: 0,
-      max: 100
-    },
-    start: 100,
-    step: 1
-  });
+  changeUiSlider(0, 100, 1);
 };
 effectMarvin.addEventListener('click', addMarvinEffect);
 const addPhobosEffect = () => {
   effectLevel.classList.remove('hidden');
   selectedType = 'phobos';
-  slider.noUiSlider.updateOptions({
-    range: {
-      min: 0,
-      max: 3
-    },
-    start: 3,
-    step: 0.1
-  });
+  changeUiSlider(0, 3, 0.1);
 };
 effectPhobos.addEventListener('click', addPhobosEffect);
 const addHeatEffect = () => {
   effectLevel.classList.remove('hidden');
   selectedType = 'heat';
-  slider.noUiSlider.updateOptions({
-    range: {
-      min: 1,
-      max: 3
-    },
-    start: 3,
-    step: 0.1
-  });
+  changeUiSlider(1, 3, 0.1);
 };
 effectHeat.addEventListener('click', addHeatEffect);
