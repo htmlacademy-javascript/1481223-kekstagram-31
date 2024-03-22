@@ -159,23 +159,26 @@ const createErrorAlert = () => {
   document.addEventListener('keydown', onEscAlertClose);
   document.body.appendChild(elementErrorAlert);
 };
-
+const submitButton = document.querySelector('.img-upload__submit');
 const onSuccessSend = () => {
   closeEditForm();
   document.removeEventListener('keydown', onEscapeEditFormClose);
   createSuccessAlert();
+  submitButton.disabled = false;
 };
 const onErrorSend = () => {
   closeEditFormWithoutReset();
   document.removeEventListener('keydown', onEscapeEditFormClose);
   createErrorAlert();
+  submitButton.disabled = false;
 };
 imageUploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  const PICTURES_CREATE_URL = 'https://31.javascript.htmlacademy.pro/kekstagra';
+  const PICTURES_CREATE_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
   const valid = pristine.validate();
 
   if(valid) {
+    submitButton.disabled = true;
     const formData = new FormData(evt.target);
     sendData(PICTURES_CREATE_URL, formData, onSuccessSend, onErrorSend);
   }
