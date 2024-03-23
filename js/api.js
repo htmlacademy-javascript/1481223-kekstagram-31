@@ -1,7 +1,8 @@
-const loadData = (url, onSuccess) => {
+const loadData = (url, onSuccess, onError) => {
   fetch(url)
     .then((response) => response.json())
-    .then((picturesData) => onSuccess(picturesData));
+    .then((picturesData) => onSuccess(picturesData))
+    .catch(() => onError());
 };
 
 const sendData = (url, data, onSuccess, onError) => {

@@ -25,11 +25,6 @@ const closeEditForm = () => {
   document.body.classList.remove('modal-open');
   resetEditFormData();
 };
-const closeEditFormWithoutReset = () => {
-  const imageOverlay = document.querySelector('.img-upload__overlay');
-  imageOverlay.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-};
 const onEscapeEditFormClose = (evt) => {
   if(evt.key === 'Escape') {
     evt.preventDefault();
@@ -113,6 +108,14 @@ pristine.addValidator(textDescription, (value) => {
   return true;
 }, 'длина комментария больше 140 символов');
 
+const editFormAlertOpen = new Event('editFormAlertOpen');
+const editFormAlertClose = new Event('editFormAlertClose');
+document.addEventListener('editFormAlertOpen', () => {
+  document.removeEventListener('keydown', onEscapeEditFormClose);
+});
+document.addEventListener('editFormAlertClose', () => {
+  document.addEventListener('keydown', onEscapeEditFormClose);
+});
 const createSuccessAlert = () => {
   const templateSuccessAlert = document.querySelector('#success').content.querySelector('.success');
   const elementSuccessAlert = templateSuccessAlert.cloneNode(true);
@@ -140,20 +143,24 @@ const createErrorAlert = () => {
   const templateErrorAlert = document.querySelector('#error').content.querySelector('.error');
   const elementErrorAlert = templateErrorAlert.cloneNode(true);
   const closeAlertButton = elementErrorAlert.querySelector('.error__button');
+  document.dispatchEvent(editFormAlertOpen);
   const onEscAlertClose = (evt) => {
     if(evt.key === 'Escape') {
       elementErrorAlert.remove();
       document.removeEventListener('keydown', onEscAlertClose);
+      document.dispatchEvent(editFormAlertClose);
     }
   };
   closeAlertButton.addEventListener('click', () => {
     elementErrorAlert.remove();
     document.removeEventListener('keydown', onEscAlertClose);
+    document.dispatchEvent(editFormAlertClose);
   });
   elementErrorAlert.addEventListener('click', (evt) => {
     if(!evt.target.closest('.error__inner')){
       elementErrorAlert.remove();
       document.removeEventListener('keydown', onEscAlertClose);
+      document.dispatchEvent(editFormAlertClose);
     }
   });
   document.addEventListener('keydown', onEscAlertClose);
@@ -167,14 +174,12 @@ const onSuccessSend = () => {
   submitButton.disabled = false;
 };
 const onErrorSend = () => {
-  closeEditFormWithoutReset();
-  document.removeEventListener('keydown', onEscapeEditFormClose);
   createErrorAlert();
   submitButton.disabled = false;
 };
 imageUploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  const PICTURES_CREATE_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
+  const PICTURES_CREATE_URL = 'https://31.javascript.htmlacademy.pro/kekstagra';
   const valid = pristine.validate();
 
   if(valid) {
