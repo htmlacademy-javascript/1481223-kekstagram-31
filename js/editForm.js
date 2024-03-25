@@ -42,6 +42,7 @@ const onClickToCloseButtonEditForm = (evt) => {
 imgUploadCancel.addEventListener('click', onClickToCloseButtonEditForm);
 
 const onChangeImageUploadInput = () => {
+  resetEditFormData();
   openEditForm();
   document.addEventListener('keydown', onEscapeEditFormClose);
 };

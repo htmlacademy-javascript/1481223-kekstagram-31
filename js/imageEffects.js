@@ -1,4 +1,3 @@
-const imageUploadInput = document.querySelector('.img-upload__input');
 const effectLevel = document.querySelector('.img-upload__effect-level');
 const imageUploadPreview = document.querySelector('.img-upload__preview img');
 const effectLevelValue = document.querySelector('.effect-level__value');
@@ -49,7 +48,6 @@ const onChangeUploadInputSetDefaultEffect = () => {
   effectLevelValue.value = '';
   selectedType = '';
 };
-imageUploadInput.addEventListener('change', onChangeUploadInputSetDefaultEffect);
 
 const changeUiSlider = (min, max, step, type) => {
   selectedType = type;
