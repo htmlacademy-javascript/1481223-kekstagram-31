@@ -1,5 +1,4 @@
 const imageUploadPreview = document.querySelector('.img-upload__preview img');
-const imageUploadInput = document.querySelector('.img-upload__input');
 const scaleInput = document.querySelector('.scale__control--value');
 const DEFAULT_SCALE = 100;
 let pictureScale;
@@ -8,7 +7,6 @@ const onChangeUploadInputSetDefaultScale = () => {
   scaleInput.value = `${pictureScale}%`;
   imageUploadPreview.style.transform = `scale(${pictureScale / 100})`;
 };
-imageUploadInput.addEventListener('change', onChangeUploadInputSetDefaultScale);
 const buttonBigger = document.querySelector('.scale__control--bigger');
 const buttonSmaller = document.querySelector('.scale__control--smaller');
 const makePictureBigger = (evt) => {
@@ -31,3 +29,4 @@ const makePictureSmaller = (evt) => {
   imageUploadPreview.style.transform = `scale(${pictureScale / 100})`;
 };
 buttonSmaller.addEventListener('click', makePictureSmaller);
+export {onChangeUploadInputSetDefaultScale};
