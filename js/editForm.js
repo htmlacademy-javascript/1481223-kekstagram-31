@@ -13,6 +13,14 @@ const resetEditFormData = () => {
   textDescription.value = '';
   imageUploadInput.value = null;
 };
+
+const onChangeResetEditFormData = () => {
+  onChangeUploadInputSetDefaultEffect();
+  onChangeUploadInputSetDefaultScale();
+  hashTagField.value = '';
+  textDescription.value = '';
+};
+
 const openEditForm = () => {
   const imageOverlay = document.querySelector('.img-upload__overlay');
   imageOverlay.classList.remove('hidden');
@@ -42,7 +50,7 @@ const onClickToCloseButtonEditForm = (evt) => {
 imgUploadCancel.addEventListener('click', onClickToCloseButtonEditForm);
 
 const onChangeImageUploadInput = () => {
-  resetEditFormData();
+  onChangeResetEditFormData();
   openEditForm();
   document.addEventListener('keydown', onEscapeEditFormClose);
 };
@@ -180,7 +188,7 @@ const onErrorSend = () => {
 };
 imageUploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  const PICTURES_CREATE_URL = 'https://31.javascript.htmlacademy.pro/kekstagra';
+  const PICTURES_CREATE_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
   const valid = pristine.validate();
 
   if(valid) {
