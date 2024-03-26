@@ -14,6 +14,7 @@ const createErrorPicturesLoadAlert = () => {
   const templateErrorPicturesLoadAlert = document.querySelector('#data-error').content.querySelector('.data-error');
   const elementErrorPicturesLoadAlert = templateErrorPicturesLoadAlert.cloneNode(true);
   document.body.appendChild(elementErrorPicturesLoadAlert);
+  setTimeout(() => elementErrorPicturesLoadAlert.remove(), 5000);
 };
 
 loadData(PICTURES_URL, (photos) => {
