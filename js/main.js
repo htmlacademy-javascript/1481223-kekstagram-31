@@ -4,6 +4,7 @@ import '../vendor/nouislider/nouislider.js';
 import {loadData} from './api.js';
 import {showPictures} from './showPictures.js';
 import {renderPictureFullsize} from './renderPictureFullsize.js';
+import {initFilter} from './filter.js';
 import './editForm.js';
 import './imageScale.js';
 import './imageEffects.js';
@@ -20,6 +21,7 @@ const createErrorPicturesLoadAlert = () => {
 loadData(PICTURES_URL, (photos) => {
   showPictures(photos);
   renderPictureFullsize(photos);
+  initFilter(photos);
 },
 () => {
   createErrorPicturesLoadAlert();
