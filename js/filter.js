@@ -1,3 +1,4 @@
+import {debounce} from './util.js';
 import {showPictures} from './showPictures.js';
 
 const initFilter = (photos) => {
@@ -7,14 +8,16 @@ const initFilter = (photos) => {
   const filterRandom = document.querySelector('#filter-random');
   const filterDiscussed = document.querySelector('#filter-discussed');
   const filterButtons = document.querySelectorAll('.img-filters__button');
-  filterDefault.addEventListener('click', () => {
+  const onClickDefaultFilter = () => {
     for(let i = 0; i < filterButtons.length; i++) {
       filterButtons[i].classList.remove('img-filters__button--active');
     }
     filterDefault.classList.add('img-filters__button--active');
     showPictures(photos);
-  });
-  filterRandom.addEventListener('click', () => {
+  };
+  const onClickDefaultFilterDebounce = debounce(onClickDefaultFilter);
+  filterDefault.addEventListener('click', onClickDefaultFilterDebounce);
+  const onClickRandomFilter = () => {
     for(let i = 0; i < filterButtons.length; i++) {
       filterButtons[i].classList.remove('img-filters__button--active');
     }
@@ -23,8 +26,10 @@ const initFilter = (photos) => {
     copyPhotos.sort(() => 0.5 - Math.random());
     copyPhotos = copyPhotos.slice(0, 10);
     showPictures(copyPhotos);
-  });
-  filterDiscussed.addEventListener('click', () => {
+  };
+  const onClickRandomFilterDebounce = debounce(onClickRandomFilter);
+  filterRandom.addEventListener('click', onClickRandomFilterDebounce);
+  const onClickDiscussedFilter = () => {
     for(let i = 0; i < filterButtons.length; i++) {
       filterButtons[i].classList.remove('img-filters__button--active');
     }
@@ -32,7 +37,9 @@ const initFilter = (photos) => {
     const copyPhotos = photos.slice();
     copyPhotos.sort((photo1, photo2) => photo2.comments.length - photo1.comments.length);
     showPictures(copyPhotos);
-  });
+  };
+  const onClickDiscussedFilterDebounce = debounce(onClickDiscussedFilter);
+  filterDiscussed.addEventListener('click', onClickDiscussedFilterDebounce);
 };
 
 export {initFilter};
