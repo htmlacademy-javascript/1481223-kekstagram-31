@@ -1,7 +1,7 @@
 import {debounce} from './util.js';
 import {showPictures} from './showPictures.js';
 
-const MAX_RANDOM_IMAGE = 10;
+const COUNT_RANDOM_IMAGE = 10;
 
 const initFilter = (photos) => {
   const filters = document.querySelector('.img-filters');
@@ -26,7 +26,7 @@ const initFilter = (photos) => {
     filterRandom.classList.add('img-filters__button--active');
     let copyPhotos = photos.slice();
     copyPhotos.sort(() => 0.5 - Math.random());
-    copyPhotos = copyPhotos.slice(0, MAX_RANDOM_IMAGE);
+    copyPhotos = copyPhotos.slice(0, COUNT_RANDOM_IMAGE);
     showPictures(copyPhotos);
   };
   const onClickRandomFilterDebounce = debounce(onClickRandomFilter);
