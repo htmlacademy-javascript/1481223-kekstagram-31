@@ -50,6 +50,15 @@ const onClickToCloseButtonEditForm = (evt) => {
 imgUploadCancel.addEventListener('click', onClickToCloseButtonEditForm);
 
 const onChangeImageUploadInput = () => {
+  const FILE_TYPES = ['.jpg', '.jpeg', '.png'];
+  const file = imageUploadInput.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  if(!matches) {
+    return;
+  }
+  const imageUploadPreview = document.querySelector('.img-upload__preview img');
+  imageUploadPreview.src = URL.createObjectURL(file);
   onChangeResetEditFormData();
   openEditForm();
   document.addEventListener('keydown', onEscapeEditFormClose);
