@@ -24,10 +24,10 @@ const initFilter = (photos) => {
   };
 
   const onClickFilter = (evt) => {
-    if(!evt.target.closest('.img-filters__button')) {
+    const checkedEl = document.querySelector('.img-filters__button--active');
+    if(!evt.target.closest('.img-filters__button') || checkedEl === evt.target) {
       return;
     }
-    const checkedEl = document.querySelector('.img-filters__button--active');
     checkedEl.classList.remove('img-filters__button--active');
     const elId = evt.target.id;
     evt.target.classList.add('img-filters__button--active');
