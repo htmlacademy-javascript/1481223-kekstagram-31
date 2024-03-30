@@ -58,7 +58,12 @@ const onChangeImageUploadInput = () => {
     return;
   }
   const imageUploadPreview = document.querySelector('.img-upload__preview img');
-  imageUploadPreview.src = URL.createObjectURL(file);
+  const imageUrl = URL.createObjectURL(file);
+  imageUploadPreview.src = imageUrl;
+  const effectsPreviews = document.querySelectorAll('.effects__preview');
+  for(let i = 0; i < effectsPreviews.length; i++) {
+    effectsPreviews[i].style.backgroundImage = `url(${imageUrl})`;
+  }
   onChangeResetEditFormData();
   openEditForm();
   document.addEventListener('keydown', onEscapeEditFormClose);
