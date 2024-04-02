@@ -1,6 +1,7 @@
 import '../vendor/pristine/pristine.min.js';
 import '../vendor/nouislider/nouislider.js';
 
+import {PICTURES_URL} from './const.js';
 import {loadData} from './api.js';
 import {renderPictures} from './renderPictures.js';
 import {renderPictureFullsize} from './renderPictureFullsize.js';
@@ -8,8 +9,6 @@ import {initFilter} from './filter.js';
 import './editForm.js';
 import './imageScale.js';
 import './imageEffects.js';
-
-const PICTURES_URL = 'https://31.javascript.htmlacademy.pro/kekstagram/data';
 
 const createErrorPicturesLoadAlert = () => {
   const templateErrorPicturesLoadAlert = document.querySelector('#data-error').content.querySelector('.data-error');

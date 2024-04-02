@@ -1,6 +1,7 @@
 import {sendData} from './api.js';
 import {onChangeUploadInputSetDefaultEffect} from './imageEffects.js';
 import {onChangeUploadInputSetDefaultScale} from './imageScale.js';
+import {PICTURES_CREATE_URL} from './const.js';
 
 const hashTagField = document.querySelector('.text__hashtags');
 const textDescription = document.querySelector('.text__description');
@@ -202,7 +203,6 @@ const onErrorSend = () => {
 };
 imageUploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  const PICTURES_CREATE_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
   const valid = pristine.validate();
 
   if(valid) {
