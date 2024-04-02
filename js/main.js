@@ -2,7 +2,7 @@ import '../vendor/pristine/pristine.min.js';
 import '../vendor/nouislider/nouislider.js';
 
 import {loadData} from './api.js';
-import {showPictures} from './showPictures.js';
+import {renderPictures} from './renderPictures.js';
 import {renderPictureFullsize} from './renderPictureFullsize.js';
 import {initFilter} from './filter.js';
 import './editForm.js';
@@ -19,7 +19,7 @@ const createErrorPicturesLoadAlert = () => {
 };
 
 loadData(PICTURES_URL, (photos) => {
-  showPictures(photos);
+  renderPictures(photos);
   renderPictureFullsize(photos);
   initFilter(photos);
 },

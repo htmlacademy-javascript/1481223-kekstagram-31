@@ -1,5 +1,5 @@
 import {debounce} from './util.js';
-import {showPictures} from './showPictures.js';
+import {renderPictures} from './renderPictures.js';
 
 const COUNT_RANDOM_IMAGE = 10;
 
@@ -9,18 +9,18 @@ const initFilter = (photos) => {
   const filterForm = document.querySelector('.img-filters__form');
 
   const onClickDefaultFilter = () => {
-    showPictures(photos);
+    renderPictures(photos);
   };
   const onClickRandomFilter = () => {
     let copyPhotos = photos.slice();
     copyPhotos.sort(() => 0.5 - Math.random());
     copyPhotos = copyPhotos.slice(0, COUNT_RANDOM_IMAGE);
-    showPictures(copyPhotos);
+    renderPictures(copyPhotos);
   };
   const onClickDiscussedFilter = () => {
     const copyPhotos = photos.slice();
     copyPhotos.sort((photo1, photo2) => photo2.comments.length - photo1.comments.length);
-    showPictures(copyPhotos);
+    renderPictures(copyPhotos);
   };
 
   const onClickFilter = (evt) => {

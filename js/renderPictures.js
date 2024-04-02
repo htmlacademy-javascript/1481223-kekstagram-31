@@ -1,4 +1,4 @@
-const showPictures = (photos) => {
+const renderPictures = (photos) => {
   const photoTemplate = document.querySelector('#picture').content.querySelector('.picture');
   const picturesElement = document.querySelector('.pictures');
   const photosFragment = document.createDocumentFragment();
@@ -22,4 +22,4 @@ const showPictures = (photos) => {
   });
   picturesElement.appendChild(photosFragment);
 };
-export {showPictures};
+export {renderPictures};
