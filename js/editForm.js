@@ -8,12 +8,21 @@ const hashTagField = document.querySelector('.text__hashtags');
 const textDescription = document.querySelector('.text__description');
 const imageUploadInput = document.querySelector('.img-upload__input');
 
+const imageUploadForm = document.querySelector('.img-upload__form');
+const pristine = new Pristine(imageUploadForm, {
+  classTo: 'img-upload__field-wrapper',
+  errorTextClass: 'img-upload__field-wrapper--error',
+  errorTextParent: 'img-upload__field-wrapper',
+  errorTextTag: 'div'
+});
+
 const resetEditFormData = () => {
   onChangeUploadInputSetDefaultEffect();
   onChangeUploadInputSetDefaultScale();
   hashTagField.value = '';
   textDescription.value = '';
   imageUploadInput.value = null;
+  pristine.reset();
 };
 
 const onChangeResetEditFormData = () => {
@@ -79,13 +88,6 @@ const onKeyStopPropagationHashTagField = (evt) => {
 };
 hashTagField.addEventListener('keydown', onKeyStopPropagationHashTagField);
 textDescription.addEventListener('keydown', onKeyStopPropagationHashTagField);
-const imageUploadForm = document.querySelector('.img-upload__form');
-const pristine = new Pristine(imageUploadForm, {
-  classTo: 'img-upload__field-wrapper',
-  errorTextClass: 'img-upload__field-wrapper--error',
-  errorTextParent: 'img-upload__field-wrapper',
-  errorTextTag: 'div'
-});
 pristine.addValidator(hashTagField, (value) => {
   if(value === ''){
     return true;

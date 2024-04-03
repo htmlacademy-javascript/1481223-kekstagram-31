@@ -4,9 +4,7 @@ const renderPictures = (photos) => {
   const photosFragment = document.createDocumentFragment();
 
   const oldPhotos = document.querySelectorAll('.picture');
-  for(let i = 0; i < oldPhotos.length; i++) {
-    oldPhotos[i].remove();
-  }
+  oldPhotos.forEach((photo) => photo.remove());
   photos.forEach(({id, url, description, likes, comments}) => {
     const photoElement = photoTemplate.cloneNode(true);
     const pictureElement = photoElement.querySelector('.picture__img');
