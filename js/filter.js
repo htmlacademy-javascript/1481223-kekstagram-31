@@ -23,14 +23,8 @@ const initFilter = (photos) => {
     renderPictures(copyPhotos);
   };
 
-  const onClickFilter = (evt) => {
-    const checkedEl = document.querySelector('.img-filters__button--active');
-    if(!evt.target.closest('.img-filters__button') || checkedEl === evt.target) {
-      return;
-    }
-    checkedEl.classList.remove('img-filters__button--active');
+  const onClickFilterChange = (evt) => {
     const elId = evt.target.id;
-    evt.target.classList.add('img-filters__button--active');
     switch(elId) {
       case 'filter-default':
         onClickDefaultFilter();
@@ -43,7 +37,18 @@ const initFilter = (photos) => {
         break;
     }
   };
-  filterForm.addEventListener('click', debounce(onClickFilter));
+  const onClickFilterChangeDebounce = debounce(onClickFilterChange);
+  const onClickFilterChangeClick = (evt) => {
+    const checkedEl = document.querySelector('.img-filters__button--active');
+    if(!evt.target.closest('.img-filters__button') || checkedEl === evt.target) {
+      return;
+    }
+    checkedEl.classList.remove('img-filters__button--active');
+    evt.target.classList.add('img-filters__button--active');
+    const bindDebounce = onClickFilterChangeDebounce.bind(null, evt);
+    bindDebounce();
+  };
+  filterForm.addEventListener('click', onClickFilterChangeClick);
 };
 
 export {initFilter};
