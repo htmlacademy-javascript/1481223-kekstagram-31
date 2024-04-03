@@ -92,9 +92,10 @@ pristine.addValidator(hashTagField, (value) => {
   if(value === ''){
     return true;
   }
-  const tags = value.trim().split(' ');
+  let tags = value.trim().split(' ');
   let isValid = true;
   const tagRegular = /^#[a-zа-яё0-9]{1,19}$/i;
+  tags = tags.filter((tag) => tag !== '');
   tags.forEach((tag) => {
     if(!tagRegular.test(tag)) {
       isValid = false;
@@ -106,7 +107,8 @@ pristine.addValidator(hashTagField, (value) => {
   if(value === ''){
     return true;
   }
-  const tags = value.trim().split(' ');
+  let tags = value.trim().split(' ');
+  tags = tags.filter((tag) => tag !== '');
   if(tags.length > 5) {
     return false;
   }
@@ -116,7 +118,8 @@ pristine.addValidator(hashTagField, (value) => {
   if(value === ''){
     return true;
   }
-  const tags = value.trim().split(' ');
+  let tags = value.trim().split(' ');
+  tags = tags.filter((tag) => tag !== '');
   let isValid = true;
   const results = [];
   tags.forEach((tag) => {
