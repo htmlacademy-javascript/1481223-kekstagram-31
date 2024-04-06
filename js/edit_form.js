@@ -1,7 +1,7 @@
 import {createSuccessAlert, createErrorAlert} from './util.js';
 import {sendData} from './api.js';
-import {onChangeUploadInputSetDefaultEffect} from './imageEffects.js';
-import {onChangeUploadInputSetDefaultScale} from './imageScale.js';
+import {onChangeUploadInputSetDefaultEffect} from './image_effects.js';
+import {onChangeUploadInputSetDefaultScale} from './image_scale.js';
 import {PICTURES_CREATE_URL} from './const.js';
 
 const hashTagField = document.querySelector('.text__hashtags');

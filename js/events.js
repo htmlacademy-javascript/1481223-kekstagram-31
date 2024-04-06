@@ -1,4 +1,4 @@
-import {onEscapeEditFormClose} from './editForm.js';
+import {onEscapeEditFormClose} from './edit_form.js';
 const editFormAlertOpen = new Event('editFormAlertOpen');
 const editFormAlertClose = new Event('editFormAlertClose');
 document.addEventListener('editFormAlertOpen', () => {
