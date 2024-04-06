@@ -1,3 +1,4 @@
+import {COMMENTS_ONE_SHOW} from './const.js';
 const commentLoader = document.querySelector('.comments-loader');
 let addComments;
 const showPictureModal = () => {
@@ -30,7 +31,6 @@ const onEscapeModalClose = (evt) => {
 };
 const commentExampleElement = document.querySelector('.social__comment');
 const addCommentsGenerator = (comments, startCount) => {
-  const COMMENTS_ONE_SHOW = 5;
   let commentsShownCounter = startCount;
   if(comments.length < startCount) {
     commentsShownCounter = comments.length;
