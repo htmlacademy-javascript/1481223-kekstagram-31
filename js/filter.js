@@ -1,5 +1,5 @@
 import {debounce} from './util.js';
-import {showPictures} from './showPictures.js';
+import {renderPictures} from './render_pictures.js';
 
 const COUNT_RANDOM_IMAGE = 10;
 
@@ -9,28 +9,22 @@ const initFilter = (photos) => {
   const filterForm = document.querySelector('.img-filters__form');
 
   const onClickDefaultFilter = () => {
-    showPictures(photos);
+    renderPictures(photos);
   };
   const onClickRandomFilter = () => {
     let copyPhotos = photos.slice();
     copyPhotos.sort(() => 0.5 - Math.random());
     copyPhotos = copyPhotos.slice(0, COUNT_RANDOM_IMAGE);
-    showPictures(copyPhotos);
+    renderPictures(copyPhotos);
   };
   const onClickDiscussedFilter = () => {
     const copyPhotos = photos.slice();
     copyPhotos.sort((photo1, photo2) => photo2.comments.length - photo1.comments.length);
-    showPictures(copyPhotos);
+    renderPictures(copyPhotos);
   };
 
-  const onClickFilter = (evt) => {
-    const checkedEl = document.querySelector('.img-filters__button--active');
-    if(!evt.target.closest('.img-filters__button') || checkedEl === evt.target) {
-      return;
-    }
-    checkedEl.classList.remove('img-filters__button--active');
+  const onClickFilterChange = (evt) => {
     const elId = evt.target.id;
-    evt.target.classList.add('img-filters__button--active');
     switch(elId) {
       case 'filter-default':
         onClickDefaultFilter();
@@ -43,7 +37,18 @@ const initFilter = (photos) => {
         break;
     }
   };
-  filterForm.addEventListener('click', debounce(onClickFilter));
+  const onClickFilterChangeDebounce = debounce(onClickFilterChange);
+  const onClickFilterChangeMenu = (evt) => {
+    const checkedEl = document.querySelector('.img-filters__button--active');
+    if(!evt.target.closest('.img-filters__button') || checkedEl === evt.target) {
+      return;
+    }
+    checkedEl.classList.remove('img-filters__button--active');
+    evt.target.classList.add('img-filters__button--active');
+    const bindDebounce = onClickFilterChangeDebounce.bind(null, evt);
+    bindDebounce();
+  };
+  filterForm.addEventListener('click', onClickFilterChangeMenu);
 };
 
 export {initFilter};

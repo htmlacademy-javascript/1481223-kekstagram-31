@@ -1,12 +1,10 @@
-const showPictures = (photos) => {
+const renderPictures = (photos) => {
   const photoTemplate = document.querySelector('#picture').content.querySelector('.picture');
   const picturesElement = document.querySelector('.pictures');
   const photosFragment = document.createDocumentFragment();
 
   const oldPhotos = document.querySelectorAll('.picture');
-  for(let i = 0; i < oldPhotos.length; i++) {
-    oldPhotos[i].remove();
-  }
+  oldPhotos.forEach((photo) => photo.remove());
   photos.forEach(({id, url, description, likes, comments}) => {
     const photoElement = photoTemplate.cloneNode(true);
     const pictureElement = photoElement.querySelector('.picture__img');
@@ -22,4 +20,4 @@ const showPictures = (photos) => {
   });
   picturesElement.appendChild(photosFragment);
 };
-export {showPictures};
+export {renderPictures};

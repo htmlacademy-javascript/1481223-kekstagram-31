@@ -1,10 +1,20 @@
+import {createSuccessAlert, createErrorAlert} from './util.js';
 import {sendData} from './api.js';
-import {onChangeUploadInputSetDefaultEffect} from './imageEffects.js';
-import {onChangeUploadInputSetDefaultScale} from './imageScale.js';
+import {onChangeUploadInputSetDefaultEffect} from './image_effects.js';
+import {onChangeUploadInputSetDefaultScale} from './image_scale.js';
+import {PICTURES_CREATE_URL} from './const.js';
 
 const hashTagField = document.querySelector('.text__hashtags');
 const textDescription = document.querySelector('.text__description');
 const imageUploadInput = document.querySelector('.img-upload__input');
+
+const imageUploadForm = document.querySelector('.img-upload__form');
+const pristine = new Pristine(imageUploadForm, {
+  classTo: 'img-upload__field-wrapper',
+  errorTextClass: 'img-upload__field-wrapper--error',
+  errorTextParent: 'img-upload__field-wrapper',
+  errorTextTag: 'div'
+});
 
 const resetEditFormData = () => {
   onChangeUploadInputSetDefaultEffect();
@@ -12,6 +22,7 @@ const resetEditFormData = () => {
   hashTagField.value = '';
   textDescription.value = '';
   imageUploadInput.value = null;
+  pristine.reset();
 };
 
 const onChangeResetEditFormData = () => {
@@ -50,6 +61,20 @@ const onClickToCloseButtonEditForm = (evt) => {
 imgUploadCancel.addEventListener('click', onClickToCloseButtonEditForm);
 
 const onChangeImageUploadInput = () => {
+  const FILE_TYPES = ['.jpg', '.jpeg', '.png'];
+  const file = imageUploadInput.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  if(!matches) {
+    return;
+  }
+  const imageUploadPreview = document.querySelector('.img-upload__preview img');
+  const imageUrl = URL.createObjectURL(file);
+  imageUploadPreview.src = imageUrl;
+  const effectsPreviews = document.querySelectorAll('.effects__preview');
+  for(let i = 0; i < effectsPreviews.length; i++) {
+    effectsPreviews[i].style.backgroundImage = `url(${imageUrl})`;
+  }
   onChangeResetEditFormData();
   openEditForm();
   document.addEventListener('keydown', onEscapeEditFormClose);
@@ -63,20 +88,14 @@ const onKeyStopPropagationHashTagField = (evt) => {
 };
 hashTagField.addEventListener('keydown', onKeyStopPropagationHashTagField);
 textDescription.addEventListener('keydown', onKeyStopPropagationHashTagField);
-const imageUploadForm = document.querySelector('.img-upload__form');
-const pristine = new Pristine(imageUploadForm, {
-  classTo: 'img-upload__field-wrapper',
-  errorTextClass: 'img-upload__field-wrapper--error',
-  errorTextParent: 'img-upload__field-wrapper',
-  errorTextTag: 'div'
-});
 pristine.addValidator(hashTagField, (value) => {
   if(value === ''){
     return true;
   }
-  const tags = value.trim().split(' ');
+  let tags = value.trim().split(' ');
   let isValid = true;
   const tagRegular = /^#[a-zа-яё0-9]{1,19}$/i;
+  tags = tags.filter((tag) => tag !== '');
   tags.forEach((tag) => {
     if(!tagRegular.test(tag)) {
       isValid = false;
@@ -88,7 +107,8 @@ pristine.addValidator(hashTagField, (value) => {
   if(value === ''){
     return true;
   }
-  const tags = value.trim().split(' ');
+  let tags = value.trim().split(' ');
+  tags = tags.filter((tag) => tag !== '');
   if(tags.length > 5) {
     return false;
   }
@@ -98,7 +118,8 @@ pristine.addValidator(hashTagField, (value) => {
   if(value === ''){
     return true;
   }
-  const tags = value.trim().split(' ');
+  let tags = value.trim().split(' ');
+  tags = tags.filter((tag) => tag !== '');
   let isValid = true;
   const results = [];
   tags.forEach((tag) => {
@@ -117,64 +138,6 @@ pristine.addValidator(textDescription, (value) => {
   return true;
 }, 'длина комментария больше 140 символов');
 
-const editFormAlertOpen = new Event('editFormAlertOpen');
-const editFormAlertClose = new Event('editFormAlertClose');
-document.addEventListener('editFormAlertOpen', () => {
-  document.removeEventListener('keydown', onEscapeEditFormClose);
-});
-document.addEventListener('editFormAlertClose', () => {
-  document.addEventListener('keydown', onEscapeEditFormClose);
-});
-const createSuccessAlert = () => {
-  const templateSuccessAlert = document.querySelector('#success').content.querySelector('.success');
-  const elementSuccessAlert = templateSuccessAlert.cloneNode(true);
-  const closeAlertButton = elementSuccessAlert.querySelector('.success__button');
-  const onEscAlertClose = (evt) => {
-    if(evt.key === 'Escape') {
-      elementSuccessAlert.remove();
-      document.removeEventListener('keydown', onEscAlertClose);
-    }
-  };
-  closeAlertButton.addEventListener('click', () => {
-    elementSuccessAlert.remove();
-    document.removeEventListener('keydown', onEscAlertClose);
-  });
-  elementSuccessAlert.addEventListener('click', (evt) => {
-    if(!evt.target.closest('.success__inner')){
-      elementSuccessAlert.remove();
-      document.removeEventListener('keydown', onEscAlertClose);
-    }
-  });
-  document.addEventListener('keydown', onEscAlertClose);
-  document.body.appendChild(elementSuccessAlert);
-};
-const createErrorAlert = () => {
-  const templateErrorAlert = document.querySelector('#error').content.querySelector('.error');
-  const elementErrorAlert = templateErrorAlert.cloneNode(true);
-  const closeAlertButton = elementErrorAlert.querySelector('.error__button');
-  document.dispatchEvent(editFormAlertOpen);
-  const onEscAlertClose = (evt) => {
-    if(evt.key === 'Escape') {
-      elementErrorAlert.remove();
-      document.removeEventListener('keydown', onEscAlertClose);
-      document.dispatchEvent(editFormAlertClose);
-    }
-  };
-  closeAlertButton.addEventListener('click', () => {
-    elementErrorAlert.remove();
-    document.removeEventListener('keydown', onEscAlertClose);
-    document.dispatchEvent(editFormAlertClose);
-  });
-  elementErrorAlert.addEventListener('click', (evt) => {
-    if(!evt.target.closest('.error__inner')){
-      elementErrorAlert.remove();
-      document.removeEventListener('keydown', onEscAlertClose);
-      document.dispatchEvent(editFormAlertClose);
-    }
-  });
-  document.addEventListener('keydown', onEscAlertClose);
-  document.body.appendChild(elementErrorAlert);
-};
 const submitButton = document.querySelector('.img-upload__submit');
 const onSuccessSend = () => {
   closeEditForm();
@@ -188,7 +151,6 @@ const onErrorSend = () => {
 };
 imageUploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  const PICTURES_CREATE_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
   const valid = pristine.validate();
 
   if(valid) {
@@ -197,3 +159,5 @@ imageUploadForm.addEventListener('submit', (evt) => {
     sendData(PICTURES_CREATE_URL, formData, onSuccessSend, onErrorSend);
   }
 });
+
+export {onEscapeEditFormClose};
