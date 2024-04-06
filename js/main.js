@@ -10,9 +10,9 @@ import {initFilter} from './filter.js';
 import './edit_form.js';
 
 loadData(PICTURES_URL, (photos) => {
+  initFilter(photos);
   renderPictures(photos);
   renderPictureFullsize(photos);
-  initFilter(photos);
 },
 () => {
   createErrorPicturesLoadAlert();
