@@ -1,5 +1,5 @@
 import {debounce} from './util.js';
-import {renderPictures} from './render_pictures.js';
+import {renderPictures} from './render-pictures.js';
 
 const COUNT_RANDOM_IMAGE = 10;
 
