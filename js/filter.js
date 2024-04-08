@@ -37,7 +37,6 @@ const initFilter = (photos) => {
         break;
     }
   };
-  const onClickFilterChangeDebounce = debounce(onClickFilterChange);
   const onClickFilterChangeMenu = (evt) => {
     const checkedEl = document.querySelector('.img-filters__button--active');
     if(!evt.target.closest('.img-filters__button') || checkedEl === evt.target) {
@@ -45,8 +44,9 @@ const initFilter = (photos) => {
     }
     checkedEl.classList.remove('img-filters__button--active');
     evt.target.classList.add('img-filters__button--active');
-    const bindDebounce = onClickFilterChangeDebounce.bind(null, evt);
-    bindDebounce();
+
+    const bindOnClickFilterChange = onClickFilterChange.bind(null, evt);
+    debounce(bindOnClickFilterChange)();
   };
   filterForm.addEventListener('click', onClickFilterChangeMenu);
 };
