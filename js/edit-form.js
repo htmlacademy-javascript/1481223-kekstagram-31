@@ -1,8 +1,9 @@
-import {createSuccessAlert, createErrorAlert} from './util.js';
+import {createAlert} from './util.js';
 import {sendData} from './api.js';
 import {onChangeUploadInputSetDefaultEffect} from './image-effects.js';
 import {onChangeUploadInputSetDefaultScale} from './image-scale.js';
-import {PICTURES_CREATE_URL} from './const.js';
+
+const PICTURES_CREATE_URL = 'https://31.javascript.htmlacademy.pro/kekstagram/';
 
 const hashTagField = document.querySelector('.text__hashtags');
 const textDescription = document.querySelector('.text__description');
@@ -142,11 +143,11 @@ const submitButton = document.querySelector('.img-upload__submit');
 const onSuccessSend = () => {
   closeEditForm();
   document.removeEventListener('keydown', onEscapeEditFormClose);
-  createSuccessAlert();
+  createAlert('success');
   submitButton.disabled = false;
 };
 const onErrorSend = () => {
-  createErrorAlert();
+  createAlert('error', true);
   submitButton.disabled = false;
 };
 imageUploadForm.addEventListener('submit', (evt) => {

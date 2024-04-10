@@ -20,7 +20,7 @@ const getRandomIdGenerator = (min, max) => {
   };
 };
 
-function debounce (callback, timeoutDelay = 500) {
+const debounce = (callback, timeoutDelay = 500) => {
   // Используем замыкания, чтобы id таймаута у нас навсегда приклеился
   // к возвращаемой функции с setTimeout, тогда мы его сможем перезаписывать
   let timeoutId;
@@ -36,57 +36,54 @@ function debounce (callback, timeoutDelay = 500) {
     // Таким образом цикл «поставить таймаут - удалить таймаут» будет выполняться,
     // пока действие совершается чаще, чем переданная задержка timeoutDelay
   };
-}
-
-const createSuccessAlert = () => {
-  const templateSuccessAlert = document.querySelector('#success').content.querySelector('.success');
-  const elementSuccessAlert = templateSuccessAlert.cloneNode(true);
-  const closeAlertButton = elementSuccessAlert.querySelector('.success__button');
-  const onEscAlertClose = (evt) => {
-    if(evt.key === 'Escape') {
-      elementSuccessAlert.remove();
-      document.removeEventListener('keydown', onEscAlertClose);
-    }
-  };
-  closeAlertButton.addEventListener('click', () => {
-    elementSuccessAlert.remove();
-    document.removeEventListener('keydown', onEscAlertClose);
-  });
-  elementSuccessAlert.addEventListener('click', (evt) => {
-    if(!evt.target.closest('.success__inner')){
-      elementSuccessAlert.remove();
-      document.removeEventListener('keydown', onEscAlertClose);
-    }
-  });
-  document.addEventListener('keydown', onEscAlertClose);
-  document.body.appendChild(elementSuccessAlert);
 };
-const createErrorAlert = () => {
-  const templateErrorAlert = document.querySelector('#error').content.querySelector('.error');
-  const elementErrorAlert = templateErrorAlert.cloneNode(true);
-  const closeAlertButton = elementErrorAlert.querySelector('.error__button');
-  document.dispatchEvent(editFormAlertOpen);
-  const onEscAlertClose = (evt) => {
-    if(evt.key === 'Escape') {
-      elementErrorAlert.remove();
+
+const createAlert = (type, isOpenEditForm = false) => {
+  const templateAlert = document.querySelector(`#${type}`).content.querySelector(`.${type}`);
+  const elementAlert = templateAlert.cloneNode(true);
+  const closeAlertButton = elementAlert.querySelector(`.${type}__button`);
+  if(!isOpenEditForm) {
+    const onEscAlertClose = (evt) => {
+      if(evt.key === 'Escape') {
+        elementAlert.remove();
+        document.removeEventListener('keydown', onEscAlertClose);
+      }
+    };
+    closeAlertButton.addEventListener('click', () => {
+      elementAlert.remove();
+      document.removeEventListener('keydown', onEscAlertClose);
+    });
+    elementAlert.addEventListener('click', (evt) => {
+      if(!evt.target.closest(`.${type}__inner`)){
+        elementAlert.remove();
+        document.removeEventListener('keydown', onEscAlertClose);
+      }
+    });
+    document.addEventListener('keydown', onEscAlertClose);
+  } else {
+    document.dispatchEvent(editFormAlertOpen);
+    const onEscAlertClose = (evt) => {
+      if(evt.key === 'Escape') {
+        elementAlert.remove();
+        document.removeEventListener('keydown', onEscAlertClose);
+        document.dispatchEvent(editFormAlertClose);
+      }
+    };
+    closeAlertButton.addEventListener('click', () => {
+      elementAlert.remove();
       document.removeEventListener('keydown', onEscAlertClose);
       document.dispatchEvent(editFormAlertClose);
-    }
-  };
-  closeAlertButton.addEventListener('click', () => {
-    elementErrorAlert.remove();
-    document.removeEventListener('keydown', onEscAlertClose);
-    document.dispatchEvent(editFormAlertClose);
-  });
-  elementErrorAlert.addEventListener('click', (evt) => {
-    if(!evt.target.closest('.error__inner')){
-      elementErrorAlert.remove();
-      document.removeEventListener('keydown', onEscAlertClose);
-      document.dispatchEvent(editFormAlertClose);
-    }
-  });
-  document.addEventListener('keydown', onEscAlertClose);
-  document.body.appendChild(elementErrorAlert);
+    });
+    elementAlert.addEventListener('click', (evt) => {
+      if(!evt.target.closest(`.${type}__inner`)){
+        elementAlert.remove();
+        document.removeEventListener('keydown', onEscAlertClose);
+        document.dispatchEvent(editFormAlertClose);
+      }
+    });
+    document.addEventListener('keydown', onEscAlertClose);
+  }
+  document.body.appendChild(elementAlert);
 };
 
 const createErrorPicturesLoadAlert = () => {
@@ -96,4 +93,4 @@ const createErrorPicturesLoadAlert = () => {
   setTimeout(() => elementErrorPicturesLoadAlert.remove(), 5000);
 };
 
-export {getRandomInteger, getRandomArrayElement, getRandomIdGenerator, debounce, createSuccessAlert, createErrorAlert, createErrorPicturesLoadAlert};
+export {getRandomInteger, getRandomArrayElement, getRandomIdGenerator, debounce, createAlert, createErrorPicturesLoadAlert};
