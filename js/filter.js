@@ -3,24 +3,26 @@ import {renderPictures} from './render-pictures.js';
 
 const COUNT_RANDOM_IMAGE = 10;
 
+const debounceRenderPictures = debounce(renderPictures);
+
 const initFilter = (photos) => {
   const filters = document.querySelector('.img-filters');
   filters.classList.remove('img-filters--inactive');
-  const filterForm = document.querySelector('.img-filters__form');
+  const filterForm = filters.querySelector('.img-filters__form');
 
   const onClickDefaultFilter = () => {
-    renderPictures(photos);
+    debounceRenderPictures(photos);
   };
   const onClickRandomFilter = () => {
     let copyPhotos = photos.slice();
     copyPhotos.sort(() => 0.5 - Math.random());
     copyPhotos = copyPhotos.slice(0, COUNT_RANDOM_IMAGE);
-    renderPictures(copyPhotos);
+    debounceRenderPictures(copyPhotos);
   };
   const onClickDiscussedFilter = () => {
     const copyPhotos = photos.slice();
     copyPhotos.sort((photo1, photo2) => photo2.comments.length - photo1.comments.length);
-    renderPictures(copyPhotos);
+    debounceRenderPictures(copyPhotos);
   };
 
   const onClickFilterChange = (evt) => {
@@ -45,8 +47,7 @@ const initFilter = (photos) => {
     checkedEl.classList.remove('img-filters__button--active');
     evt.target.classList.add('img-filters__button--active');
 
-    const bindOnClickFilterChange = onClickFilterChange.bind(null, evt);
-    debounce(bindOnClickFilterChange)();
+    onClickFilterChange(evt);
   };
   filterForm.addEventListener('click', onClickFilterChangeMenu);
 };

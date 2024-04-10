@@ -1,4 +1,5 @@
-import {DEFAULT_SCALE} from './const.js';
+const DEFAULT_SCALE = 100;
+
 const imageUploadPreview = document.querySelector('.img-upload__preview img');
 const scaleInput = document.querySelector('.scale__control--value');
 let pictureScale;
