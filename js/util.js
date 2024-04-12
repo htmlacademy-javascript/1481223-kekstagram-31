@@ -42,47 +42,32 @@ const createAlert = (type, isOpenEditForm = false) => {
   const templateAlert = document.querySelector(`#${type}`).content.querySelector(`.${type}`);
   const elementAlert = templateAlert.cloneNode(true);
   const closeAlertButton = elementAlert.querySelector(`.${type}__button`);
-  if(!isOpenEditForm) {
-    const onEscAlertClose = (evt) => {
-      if(evt.key === 'Escape') {
-        elementAlert.remove();
-        document.removeEventListener('keydown', onEscAlertClose);
-      }
-    };
-    closeAlertButton.addEventListener('click', () => {
-      elementAlert.remove();
-      document.removeEventListener('keydown', onEscAlertClose);
-    });
-    elementAlert.addEventListener('click', (evt) => {
-      if(!evt.target.closest(`.${type}__inner`)){
-        elementAlert.remove();
-        document.removeEventListener('keydown', onEscAlertClose);
-      }
-    });
-    document.addEventListener('keydown', onEscAlertClose);
-  } else {
+  if(isOpenEditForm) {
     document.dispatchEvent(editFormAlertOpen);
-    const onEscAlertClose = (evt) => {
-      if(evt.key === 'Escape') {
-        elementAlert.remove();
-        document.removeEventListener('keydown', onEscAlertClose);
-        document.dispatchEvent(editFormAlertClose);
-      }
-    };
-    closeAlertButton.addEventListener('click', () => {
-      elementAlert.remove();
-      document.removeEventListener('keydown', onEscAlertClose);
-      document.dispatchEvent(editFormAlertClose);
-    });
-    elementAlert.addEventListener('click', (evt) => {
-      if(!evt.target.closest(`.${type}__inner`)){
-        elementAlert.remove();
-        document.removeEventListener('keydown', onEscAlertClose);
-        document.dispatchEvent(editFormAlertClose);
-      }
-    });
-    document.addEventListener('keydown', onEscAlertClose);
   }
+  const removeElementWithDispatchCloseEvent = () => {
+    elementAlert.remove();
+    if(isOpenEditForm) {
+      document.dispatchEvent(editFormAlertClose);
+    }
+  };
+  const onEscAlertClose = (evt) => {
+    if(evt.key === 'Escape') {
+      document.removeEventListener('keydown', onEscAlertClose);
+      removeElementWithDispatchCloseEvent();
+    }
+  };
+  closeAlertButton.addEventListener('click', () => {
+    document.removeEventListener('keydown', onEscAlertClose);
+    removeElementWithDispatchCloseEvent();
+  });
+  elementAlert.addEventListener('click', (evt) => {
+    if(!evt.target.closest(`.${type}__inner`)){
+      document.removeEventListener('keydown', onEscAlertClose);
+      removeElementWithDispatchCloseEvent();
+    }
+  });
+  document.addEventListener('keydown', onEscAlertClose);
   document.body.appendChild(elementAlert);
 };
 
